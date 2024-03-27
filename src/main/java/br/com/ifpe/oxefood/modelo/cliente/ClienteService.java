@@ -22,6 +22,21 @@ public class ClienteService {
         return repository.save(cliente);
     }
 
+    @Transactional
+    public void update(Long id, Cliente clienteAlterado) {
+ 
+       Cliente cliente = repository.findById(id).get();
+       cliente.setNome(clienteAlterado.getNome());
+       cliente.setDataNascimento(clienteAlterado.getDataNascimento());
+       cliente.setCpf(clienteAlterado.getCpf());
+       cliente.setFoneCelular(clienteAlterado.getFoneCelular());
+       cliente.setFoneFixo(clienteAlterado.getFoneFixo());
+         
+       cliente.setVersao(cliente.getVersao() + 1);
+       repository.save(cliente);
+   }
+ 
+
     public List<Cliente> listarTodos() {
 
         return repository.findAll();
