@@ -1,0 +1,37 @@
+package br.com.ifpe.oxefood.api.categoriaProduto;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+import br.com.ifpe.oxefood.modelo.categoriaProduto.CategoriaProduto;
+import br.com.ifpe.oxefood.modelo.categoriaProduto.CategoriaProdutoService;
+import io.swagger.v3.oas.annotations.Operation;
+
+@RestController
+@RequestMapping("/api/categoriaProduto")
+@CrossOrigin
+
+public class CategoriaProdutoController {
+
+   @Autowired
+   private CategoriaProdutoService categoriaProdutoService;
+
+   @Operation(
+       summary = "Serviço responsável por salvar uma categoria de produto no sistema.",
+       description = "Exemplo de descrição de um endpoint responsável por inserir uma categoria de produto no sistema."
+   )
+   @PostMapping
+   public ResponseEntity<CategoriaProduto> save(@RequestBody CategoriaProdutoRequest request) {
+
+       CategoriaProduto categoriaProduto = categoriaProdutoService.save(request.build());
+       return new ResponseEntity<CategoriaProduto>(categoriaProduto, HttpStatus.CREATED);
+       
+   }
+}
