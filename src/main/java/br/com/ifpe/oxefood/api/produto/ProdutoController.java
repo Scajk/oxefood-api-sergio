@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import br.com.ifpe.oxefood.modelo.categoriaProduto.CategoriaProdutoService;
 import br.com.ifpe.oxefood.modelo.produto.Produto;
 import br.com.ifpe.oxefood.modelo.produto.ProdutoService;
@@ -42,9 +41,9 @@ public class ProdutoController {
 
        Produto produtoNovo = request.build();
        produtoNovo.setCategoria(categoriaProdutoService.obterPorID(request.getIdCategoria()));
-       Produto produto = produtoService.save(request.build());
+
+       Produto produto = produtoService.save(produtoNovo);
        return new ResponseEntity<Produto>(produto, HttpStatus.CREATED);
-       
    }
 
    @Operation(
@@ -69,12 +68,16 @@ public class ProdutoController {
        summary = "Serviço responsável por alterar um produto no sistema.",
        description = "Exemplo de descrição de um endpoint responsável por alterar um produto no sistema."
    )
-    @PutMapping("/{id}")
-    public ResponseEntity<Produto> update(@PathVariable("id") Long id, @RequestBody ProdutoRequest request) {
+   @PutMapping("/{id}")
+   public ResponseEntity<Produto> update(@PathVariable("id") Long id, @RequestBody ProdutoRequest request) {
 
-       produtoService.update(id, request.build());
+       Produto produto = request.build();
+       produto.setCategoria(categoriaProdutoService.obterPorID(request.getIdCategoria()));
+       produtoService.update(id, produto);
+      
        return ResponseEntity.ok().build();
- }
+   }
+
 
     @Operation(
        summary = "Serviço responsável por apagar um produto no sistema.",
