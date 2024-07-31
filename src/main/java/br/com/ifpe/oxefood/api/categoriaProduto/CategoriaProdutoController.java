@@ -19,7 +19,7 @@ import br.com.ifpe.oxefood.modelo.categoriaProduto.CategoriaProdutoService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping("/api/categoriaproduto")
+@RequestMapping("/api/categoriaProduto")
 @CrossOrigin
 
 public class CategoriaProdutoController {
