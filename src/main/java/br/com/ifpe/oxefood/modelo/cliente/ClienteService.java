@@ -115,4 +115,24 @@ public class ClienteService {
         repository.save(cliente);
     }
 
+    public List<Cliente> filtrar(String nome, String cpf) {
+
+       List<Cliente> listaClientes = repository.findAll();
+
+       if ((nome != null && !"".equals(nome)) &&
+           (cpf == null || "".equals(cpf))) {
+               listaClientes = repository.consultarPorNome(nome);
+       } else if (
+           (nome == null || "".equals(nome)) &&
+           (cpf != null && !"".equals(cpf))) {    
+               listaClientes = repository.findByCpfContainingIgnoreCase(cpf);
+       } else if (
+           (cpf == null || "".equals(cpf)) &&
+           (nome == null || "".equals(nome))) {
+               listaClientes = repository.consultarPorNomeECpf(nome, cpf); 
+       }
+
+       return listaClientes;
+}
+
 }

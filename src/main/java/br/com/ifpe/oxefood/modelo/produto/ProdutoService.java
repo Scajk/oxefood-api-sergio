@@ -84,8 +84,6 @@ public class ProdutoService {
             (idCategoria != null)) {
                 listaProdutos = repository.consultarPorTituloECategoria(titulo, idCategoria); 
         }
- 
         return listaProdutos;
  }
- 
 }

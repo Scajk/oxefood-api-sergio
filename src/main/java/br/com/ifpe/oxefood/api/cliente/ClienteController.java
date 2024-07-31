@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifpe.oxefood.modelo.cliente.Cliente;
@@ -89,4 +90,13 @@ public class ClienteController {
         clienteService.removerEnderecoCliente(enderecoId);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/filtrar")
+    public List<Cliente> filtrar(
+           @RequestParam(value = "nome", required = false) String nome,
+           @RequestParam(value = "cpf", required = false) String cpf) {
+
+       return clienteService.filtrar(nome, cpf);
+   }
+
 }
