@@ -2,8 +2,10 @@ package br.com.ifpe.oxefood.modelo.produto;
 
 import java.time.LocalDate;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import jakarta.transaction.Transactional;
 
 @Service
@@ -57,4 +59,33 @@ public class ProdutoService {
  
         repository.save(produto);
     }
+
+    public List<Produto> filtrar(String codigo, String titulo, Long idCategoria) {
+
+        List<Produto> listaProdutos = repository.findAll();
+ 
+        if ((codigo != null && !"".equals(codigo)) &&
+            (titulo == null || "".equals(titulo)) &&
+            (idCategoria == null)) {
+                listaProdutos = repository.consultarPorCodigo(codigo);
+        } else if (
+            (codigo == null || "".equals(codigo)) &&
+            (titulo != null && !"".equals(titulo)) &&
+            (idCategoria == null)) {    
+                listaProdutos = repository.findByTituloContainingIgnoreCaseOrderByTituloAsc(titulo);
+        } else if (
+            (codigo == null || "".equals(codigo)) &&
+            (titulo == null || "".equals(titulo)) &&
+            (idCategoria != null)) {
+                listaProdutos = repository.consultarPorCategoria(idCategoria); 
+        } else if (
+            (codigo == null || "".equals(codigo)) &&
+            (titulo != null && !"".equals(titulo)) &&
+            (idCategoria != null)) {
+                listaProdutos = repository.consultarPorTituloECategoria(titulo, idCategoria); 
+        }
+ 
+        return listaProdutos;
+ }
+ 
 }
