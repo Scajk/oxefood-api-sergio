@@ -1,6 +1,7 @@
 package br.com.ifpe.oxefood.api.produto;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import br.com.ifpe.oxefood.modelo.categoriaProduto.CategoriaProdutoService;
 import br.com.ifpe.oxefood.modelo.produto.Produto;
 import br.com.ifpe.oxefood.modelo.produto.ProdutoService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/produto")
@@ -37,7 +40,8 @@ public class ProdutoController {
        description = "Exemplo de descrição de um endpoint responsável por inserir um produto no sistema."
    )
    @PostMapping
-   public ResponseEntity<Produto> save(@RequestBody ProdutoRequest request) {
+   public ResponseEntity<Produto> save(@RequestBody @Valid
+   ProdutoRequest request) {
 
        Produto produtoNovo = request.build();
        produtoNovo.setCategoria(categoriaProdutoService.obterPorID(request.getIdCategoria()));

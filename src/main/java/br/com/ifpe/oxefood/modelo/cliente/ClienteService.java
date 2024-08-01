@@ -3,8 +3,11 @@ package br.com.ifpe.oxefood.modelo.cliente;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import jakarta.transaction.Transactional;
 
 @Service
@@ -46,6 +49,12 @@ public class ClienteService {
     }
 
     public Cliente obterPorID(Long id) {
+
+        Optional<Cliente> consulta = repository.findById(id);
+
+        if (consulta.isPresent()) {
+            return consulta.get();
+        }
 
         return repository.findById(id).get();
     }
