@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ifpe.oxefood.util.exception.ClienteException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -23,6 +24,9 @@ public class ClienteService {
     @Transactional
     public Cliente save(Cliente cliente) {
 
+        if (cliente.getFoneCelular().equals(81)) {
+	    throw new ClienteException(ClienteException.MSG_INICIO_NUMERO);
+	}
         cliente.setHabilitado(Boolean.TRUE);
         cliente.setVersao(1L);
         cliente.setDataCriacao(LocalDate.now());

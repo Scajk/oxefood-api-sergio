@@ -19,7 +19,7 @@ public class ProdutoService {
    @Transactional
    public Produto save(Produto produto) {
 
-    if (produto.getValorUnitario() < 10) {
+    if (produto.getValorUnitario() < 100) {
 	    throw new ProdutoException(ProdutoException.MSG_VALOR_MINIMO_PRODUTO);
 	}
 
