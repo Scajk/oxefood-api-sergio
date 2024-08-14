@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -20,8 +21,14 @@ public class ClienteService {
     @Autowired
     private EnderecoClienteRepository enderecoClienteRepository;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
+
     @Transactional
     public Cliente save(Cliente cliente) {
+        
+        usuarioService.save(cliente.getUsuario());
 
         cliente.setHabilitado(Boolean.TRUE);
         cliente.setVersao(1L);
